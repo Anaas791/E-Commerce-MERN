@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./ProductPage.css"; // ✅ Import external CSS
+import "./ProductPage.css"; // ✅ External CSS
 
 function ProductPage() {
   const [products, setProducts] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [formData, setFormData] = useState({
+    customerName: "",
+    phone: "",
+    address: "",
+    quantity: 1,
+  });
+  const [message, setMessage] = useState("");
 
   // 🟢 Fetch products from backend when page loads
   useEffect(() => {
@@ -13,32 +22,46 @@ function ProductPage() {
       .catch((err) => console.error("Error fetching products:", err));
   }, []);
 
-  // 🟢 Handle placing an order
-  const handleOrder = async (product) => {
-    const customerName = prompt("Enter your name:");
-    const phone = prompt("Enter your phone:");
-    const address = prompt("Enter your address:");
+  // 🧠 Handle input
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    if (!customerName || !phone || !address) {
-      alert("⚠️ Please fill all details before placing an order!");
+  // 🚀 Handle order submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.customerName || !formData.phone || !formData.address) {
+      setMessage("⚠️ Please fill all fields!");
       return;
     }
 
     const order = {
-      customerName,
-      phone,
-      address,
-      productId: product._id,
-      quantity: 1,
+      ...formData,
+      productId: selectedProduct._id,
     };
 
     try {
       await axios.post("http://localhost:5000/api/orders", order);
-      alert("✅ Order placed successfully!");
+      setMessage("✅ Order placed successfully!");
+      setFormData({ customerName: "", phone: "", address: "", quantity: 1 });
+      setShowForm(false);
     } catch (error) {
-      alert("❌ Failed to place order. Please try again.");
       console.error("Order Error:", error);
+      setMessage("❌ Failed to place order. Please try again.");
     }
+  };
+
+  // 🧾 Open order form
+  const openOrderForm = (product) => {
+    setSelectedProduct(product);
+    setShowForm(true);
+    setMessage("");
+  };
+
+  // ❌ Close order form
+  const closeForm = () => {
+    setShowForm(false);
+    setSelectedProduct(null);
   };
 
   return (
@@ -52,7 +75,7 @@ function ProductPage() {
           {products.map((product) => (
             <div key={product._id} className="product-card">
               <img
-                src={product.image}
+                src={`http://localhost:5000${product.image}`}
                 alt={product.name}
                 className="product-image"
               />
@@ -62,12 +85,66 @@ function ProductPage() {
               <p className="product-price">Rs : {product.price}</p>
               <button
                 className="order-btn"
-                onClick={() => handleOrder(product)}
+                onClick={() => openOrderForm(product)}
               >
                 Place Order
               </button>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* 🧾 Order Popup Form */}
+      {showForm && selectedProduct && (
+        <div className="order-popup">
+          <div className="order-popup-content">
+            <button className="close-btn" onClick={closeForm}>
+              ✖
+            </button>
+            <h2>🛒 Place Order</h2>
+            <h3>{selectedProduct.name}</h3>
+            <p className="popup-price">Rs : {selectedProduct.price}</p>
+
+            <form onSubmit={handleSubmit} className="order-form">
+              <input
+                type="text"
+                name="customerName"
+                placeholder="Your Name"
+                value={formData.customerName}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone Number"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+              />
+              <textarea
+                name="address"
+                placeholder="Delivery Address"
+                value={formData.address}
+                onChange={handleChange}
+                required
+              ></textarea>
+              <input
+                type="number"
+                name="quantity"
+                placeholder="Quantity"
+                value={formData.quantity}
+                onChange={handleChange}
+                min="1"
+                required
+              />
+              <button type="submit" className="submit-btn">
+                ✅ Confirm Order
+              </button>
+            </form>
+
+            {message && <p className="order-message">{message}</p>}
+          </div>
         </div>
       )}
     </div>

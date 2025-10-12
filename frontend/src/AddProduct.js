@@ -3,27 +3,52 @@ import axios from "axios";
 import "./AddProduct.css";
 
 function AddProduct() {
-  const [formData, setFormData] = useState({
-    name: "",
-    price: "",
-    description: "",
-    image: "",
-    category:"",
-  });
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [image, setImage] = useState(null);
   const [message, setMessage] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  // 📸 Handle image file change
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
   };
 
+  // ✅ Handle submit with FormData
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!image) {
+      setMessage("❌ Please select an image before submitting!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("price", price);
+    formData.append("description", description);
+    formData.append("category", category);
+    formData.append("image", image);
+
     try {
-      const res = await axios.post("http://localhost:5000/api/products", formData);
+      const res = await axios.post("http://localhost:5000/api/products", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
       setMessage("✅ " + res.data.message);
-      setFormData({ name: "", price: "", description: "", image: "", category: "", });
+
+      // Clear fields after success
+      setName("");
+      setPrice("");
+      setDescription("");
+      setCategory("");
+      setImage(null);
+
+      // Reset file input visually
+      document.getElementById("fileInput").value = "";
     } catch (err) {
-      setMessage("❌ Failed to add product");
+      setMessage("❌ Failed to add product: " + (err.response?.data?.message || err.message));
     }
   };
 
@@ -33,43 +58,45 @@ function AddProduct() {
       <form onSubmit={handleSubmit} className="add-product-form">
         <input
           type="text"
-          name="name"
           placeholder="Product Name"
-          value={formData.name}
-          onChange={handleChange}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           required
         />
+
         <input
           type="text"
-          name="category"
-          placeholder="Product Category"
-          value={formData.category}
-          onChange={handleChange}
+          placeholder="Category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
           required
         />
+
         <input
           type="number"
-          name="price"
           placeholder="Price (Rs)"
-          value={formData.price}
-          onChange={handleChange}
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
           required
         />
+
         <input
-          type="text"
-          name="image"
-          placeholder="Image URL"
-          value={formData.image}
-          onChange={handleChange}
+          type="file"
+          id="fileInput"
+          accept="image/*"
+          onChange={handleImageChange}
+          required
         />
+
         <textarea
-          name="description"
           placeholder="Product Description"
-          value={formData.description}
-          onChange={handleChange}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         ></textarea>
+
         <button type="submit">Add Product</button>
       </form>
+
       {message && <p className="message">{message}</p>}
     </div>
   );

@@ -1,0 +1,123 @@
+.contact-container {
+  font-family: "Poppins", sans-serif;
+  padding: 40px 20px;
+  background: #f8f9fc;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.contact-container h1 {
+  color: #007bff;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.contact-intro {
+  color: #555;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.contact-form {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.contact-btn {
+  background: linear-gradient(90deg, #007bff, #00c6ff);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.contact-btn:hover {
+  transform: scale(1.05);
+}
+
+.contact-status {
+  margin-top: 15px;
+  font-weight: 500;
+}
+
+.contact-info {
+  margin-top: 50px;
+  background: white;
+  display: inline-block;
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 500px;
+}
+
+.contact-info h3 {
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+/* 🌐 Social Icons */
+.social-icons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.social-link {
+  font-size: 26px;
+  color: white;
+  padding: 12px;
+  border-radius: 50%;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.whatsapp {
+  background: #25d366;
+}
+
+.facebook {
+  background: #1877f2;
+}
+
+.instagram {
+  background: linear-gradient(45deg, #feda75, #d62976, #962fbf);
+}
+
+.location {
+  background: #ff4d4d;
+}
+
+.social-link:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+
+.map-container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
