@@ -1,40 +1,16 @@
 import mongoose from "mongoose";
 
-// Define schema for a product
 const productSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
-    image: {
-      type: String, // URL or image path
-      required: true,
-    },
-    category: {
-      type: String,
-      required: true,
-    },
-    stock: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
+    name: { type: String, required: true },
+    description: { type: String },
+    price: { type: Number, required: true },
+    image: { type: String, default: "https://via.placeholder.com/200" },
+    category: { type: String, default: "General" },
+    stock: { type: Number, default: 10 },
   },
-  {
-    timestamps: true, // adds createdAt and updatedAt
-  }
+  { timestamps: true }
 );
 
-// Create model
 const Product = mongoose.model("Product", productSchema);
-
 export default Product;
