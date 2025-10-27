@@ -30,7 +30,7 @@ function Contact() {
 
   return (
     <div className="contact-container">
-      <h1>📞 Contact Luxury Shopping</h1>
+      <h1>📞 Contact Buyzaar</h1>
       <p className="contact-intro">
         Have questions or need help? We’re here to assist you 24/7.
       </p>
@@ -69,7 +69,7 @@ function Contact() {
       {/* 🧭 Contact Info + Social Links */}
       <div className="contact-info">
         <h3>📍 Our Store</h3>
-        <p>Luxury Shopping Pvt Ltd</p>
+        <p>Buyzaar Pvt Ltd</p>
         <p>Colombo, Sri Lanka</p>
         <p>📞 +94 77 980 8684</p>
         <p>📧 contact@luxuryshopping.lk</p>
@@ -117,7 +117,7 @@ function Contact() {
       {/* 🗺️ Google Map Embed */}
       <div className="map-container">
         <iframe
-          title="Luxury Shopping Map"
+          title="Buyzaar Map"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63302.48530373507!2d79.8150052!3d6.9270786!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2596caa0b13ef%3A0x4cfd08d430bdf1b2!2sColombo!5e0!3m2!1sen!2slk!4v1700000000000"
           width="100%"
           height="300"

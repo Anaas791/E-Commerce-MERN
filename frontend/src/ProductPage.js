@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./ProductPage.css"; // ✅ External CSS
+import "./ProductPage.css";
 
-function ProductPage() {
+function ProductPage({ searchQuery }) {  // 👈 Receive searchQuery here
   const [products, setProducts] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [formData, setFormData] = useState({
     customerName: "",
     phone: "",
@@ -14,7 +15,6 @@ function ProductPage() {
   });
   const [message, setMessage] = useState("");
 
-  // 🟢 Fetch products from backend when page loads
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/products")
@@ -22,12 +22,10 @@ function ProductPage() {
       .catch((err) => console.error("Error fetching products:", err));
   }, []);
 
-  // 🧠 Handle input
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 🚀 Handle order submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.customerName || !formData.phone || !formData.address) {
@@ -35,10 +33,7 @@ function ProductPage() {
       return;
     }
 
-    const order = {
-      ...formData,
-      productId: selectedProduct._id,
-    };
+    const order = { ...formData, productId: selectedProduct._id };
 
     try {
       await axios.post("http://localhost:5000/api/orders", order);
@@ -51,28 +46,70 @@ function ProductPage() {
     }
   };
 
-  // 🧾 Open order form
   const openOrderForm = (product) => {
     setSelectedProduct(product);
     setShowForm(true);
     setMessage("");
   };
 
-  // ❌ Close order form
   const closeForm = () => {
     setShowForm(false);
     setSelectedProduct(null);
   };
 
+  const categories = [
+    "All",
+    "Electronic",
+    "Fashion",
+    "Beauty",
+    "Home & Kitchen",
+    "Grocery",
+    "Sports",
+    "Baby Products",
+    "Automotive",
+    "Hardware",
+  ];
+
+  // 🔍 Filter by category first
+  const categoryFiltered =
+    selectedCategory === "All"
+      ? products
+      : products.filter(
+          (product) =>
+            product.category &&
+            product.category.toLowerCase() === selectedCategory.toLowerCase()
+        );
+
+  // 🔎 Then filter by search text
+  const finalFilteredProducts = categoryFiltered.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="product-page">
       <h1 className="title">🛍️ Product List</h1>
 
-      {products.length === 0 ? (
-        <p className="loading">Loading products...</p>
+      {/* 🏷️ Category Bar */}
+      <div className="category-bar">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            className={`category-btn ${
+              selectedCategory === cat ? "active" : ""
+            }`}
+            onClick={() => setSelectedCategory(cat)}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      {/* Product Grid */}
+      {finalFilteredProducts.length === 0 ? (
+        <p className="loading">No products found.</p>
       ) : (
         <div className="product-grid">
-          {products.map((product) => (
+          {finalFilteredProducts.map((product) => (
             <div key={product._id} className="product-card">
               <img
                 src={`http://localhost:5000${product.image}`}

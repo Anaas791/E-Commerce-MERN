@@ -1,21 +1,12 @@
-/* ====== Shop Name Styling ====== */
-.shop-name {
-  font-size: 24px;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 1px;
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-}
-
-/* Navbar layout update */
+/* ===== Navigation Bar Styling ===== */
 .navbar {
   background: linear-gradient(90deg, #007bff, #00c6ff);
   color: white;
-  padding: 14px 40px;
+  padding: 10px 20px;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
   position: sticky;
   top: 0;
@@ -23,154 +14,103 @@
   font-family: "Poppins", sans-serif;
 }
 
-.nav-links {
+/* Shop Name */
+.shop-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  flex: 1;
+}
+
+/* 🔍 Search Bar */
+.nav-search {
   display: flex;
   align-items: center;
-  gap: 25px;
+  justify-content: center;
+  flex: 2;
+  margin: 8px 15px;
 }
 
-.nav-link {
-  text-decoration: none;
+.search-input {
+  width: 100%;
+  max-width: 280px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 25px 0 0 25px;
+  outline: none;
+  font-size: 14px;
+  background-color: #fff;
+  color: #333;
+}
+
+.search-btn {
+  background-color: #fca311;
+  border: none;
+  border-radius: 0 25px 25px 0;
+  padding: 8px 16px;
+  font-size: 15px;
   color: #fff;
-  font-weight: 500;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.nav-link::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0%;
-  height: 2px;
-  background-color: white;
+  cursor: pointer;
   transition: 0.3s;
 }
 
-.nav-link:hover::after {
-  width: 100%;
+.search-btn:hover {
+  background-color: #ffba08;
 }
 
-.add-product-link {
-  background-color: #ffffff;
-  color: #007bff;
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-weight: bold;
-  transition: all 0.3s ease;
+/* Nav links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
-.add-product-link:hover {
-  background-color: #f1f1f1;
-  transform: scale(1.05);
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+  font-size: 15px;
 }
 
-/* ====== Responsive ====== */
+.nav-link:hover {
+  color: #fca311;
+}
+
+/* ====== 📱 Mobile Responsive ====== */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
-    align-items: flex-start;
-    padding: 12px 20px;
+    align-items: stretch;
+    text-align: center;
   }
 
   .shop-name {
-    font-size: 20px;
     margin-bottom: 10px;
+    font-size: 20px;
+  }
+
+  .nav-search {
+    width: 100%;
+    margin: 10px 0;
+    justify-content: center;
+  }
+
+  .search-input {
+    max-width: 80%;
+    font-size: 13px;
   }
 
   .nav-links {
     flex-direction: column;
-    gap: 12px;
-    width: 100%;
-  }
-}
-
-/* ===== Footer Styling ===== */
-.footer {
-  background: #111827;
-  color: #e5e7eb;
-  padding: 40px 20px 20px;
-  font-family: "Poppins", sans-serif;
-  margin-top: 60px;
-}
-
-.footer-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  margin: 0 auto;
-  gap: 30px;
-}
-
-.footer-about,
-.footer-links,
-.footer-contact {
-  flex: 1 1 250px;
-}
-
-.footer-about h3 {
-  color: #ffffff;
-  font-size: 22px;
-  margin-bottom: 10px;
-}
-
-.footer-about p {
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.footer-links h4,
-.footer-contact h4 {
-  color: #ffffff;
-  margin-bottom: 10px;
-}
-
-.footer-links ul {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-links li {
-  margin-bottom: 6px;
-}
-
-.footer-links a {
-  color: #9ca3af;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.footer-links a:hover {
-  color: #ffffff;
-}
-
-.footer-contact p {
-  font-size: 14px;
-  margin: 4px 0;
-}
-
-.footer-bottom {
-  text-align: center;
-  padding-top: 15px;
-  border-top: 1px solid #374151;
-  font-size: 14px;
-  color: #9ca3af;
-  margin-top: 30px;
-}
-
-/* ===== Responsive Footer ===== */
-@media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
-    text-align: center;
+    gap: 10px;
+    margin-top: 10px;
   }
 
-  .footer-about,
-  .footer-links,
-  .footer-contact {
-    flex: 1 1 100%;
+  .nav-link {
+    font-size: 16px;
   }
 }
