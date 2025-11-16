@@ -15,18 +15,35 @@ function Contact() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.message) {
-      setStatus("⚠️ Please fill in all fields.");
-      return;
+  if (!formData.name || !formData.email || !formData.message) {
+    setStatus("⚠️ Please fill in all fields.");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:5000/api/message", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      setStatus("✅ Thank you! Your message has been sent.");
+      setFormData({ name: "", email: "", message: "" });
+    } else {
+      setStatus("❌ Failed to send message.");
     }
+  } catch (error) {
+    console.error(error);
+    setStatus("❌ Server error. Try again.");
+  }
+};
 
-    console.log("Message sent:", formData);
-    setStatus("✅ Thank you! Your message has been sent.");
-    setFormData({ name: "", email: "", message: "" });
-  };
 
   return (
     <div className="contact-container">
@@ -70,14 +87,14 @@ function Contact() {
       <div className="contact-info">
         <h3>📍 Our Store</h3>
         <p>Buyzaar Pvt Ltd</p>
-        <p>Colombo, Sri Lanka</p>
+        <p>Pannawa, Kobeigane, Sri Lanka</p>
         <p>📞 +94 77 980 8684</p>
-        <p>📧 contact@luxuryshopping.lk</p>
+        <p>📧 buyzaar@gmail.com</p>
 
         {/* 🌐 Social Links */}
         <div className="social-icons">
           <a
-            href="https://wa.me/94712345678"
+            href="https://wa.me/94779808684"
             target="_blank"
             rel="noreferrer"
             className="social-link whatsapp"
@@ -118,7 +135,7 @@ function Contact() {
       <div className="map-container">
         <iframe
           title="Buyzaar Map"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63302.48530373507!2d79.8150052!3d6.9270786!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2596caa0b13ef%3A0x4cfd08d430bdf1b2!2sColombo!5e0!3m2!1sen!2slk!4v1700000000000"
+          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d4055751.121301841!2d79.861243!3d6.9270786!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3afcd4d115a5b4a5%3A0x1d02cd738c1dc0ea!2sPannawa%20Town!5e0!3m2!1sen!2slk!4v1763296719947!5m2!1sen!2slk"
           width="100%"
           height="300"
           style={{ border: "none", borderRadius: "12px" }}
@@ -126,8 +143,11 @@ function Contact() {
           loading="lazy"
         ></iframe>
       </div>
+
+      
     </div>
   );
 }
 
 export default Contact;
+

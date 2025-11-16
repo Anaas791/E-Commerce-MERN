@@ -6,6 +6,8 @@ import { fileURLToPath } from "url";
 import connectDB from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import contactRoutes from "./routes/contactRoutes.js";
+
 
 dotenv.config();
 connectDB();
@@ -33,6 +35,7 @@ app.get("/", (req, res) => {
 // 🛍️ API Routes
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/message" , contactRoutes);
 
 // 🚀 Start Server
 const PORT = process.env.PORT || 5000;

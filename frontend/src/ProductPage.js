@@ -185,7 +185,9 @@ function ProductPage({ searchQuery }) {  // 👈 Receive searchQuery here
         </div>
       )}
     </div>
+    
   );
+   
 }
 
 export default ProductPage;

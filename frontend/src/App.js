@@ -7,7 +7,7 @@ import Contact from "./Contact";
 import "./App.css";
 
 function App() {
-  const [searchQuery, setSearchQuery] = useState(""); // 🔍 Search text
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <Router>
@@ -44,6 +44,14 @@ function App() {
         <Route path="/admin/add-product" element={<AddProduct />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
+
+      {/* 🌍 Global Footer */}
+      <footer className="footer">
+        <p>© {new Date().getFullYear()} Buyzaar. All Rights Reserved.</p>
+        <div className="footer-links">
+          <a href="/contact">Contact</a>
+        </div>
+      </footer>
     </Router>
   );
 }

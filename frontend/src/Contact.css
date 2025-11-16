@@ -121,3 +121,55 @@
   display: flex;
   justify-content: center;
 }
+
+
+/* -------------------------------------------------- */
+/* 📱 MOBILE RESPONSIVE STYLES */
+/* -------------------------------------------------- */
+@media (max-width: 768px) {
+  .contact-container {
+    padding: 20px 10px;
+  }
+
+  .contact-container h1 {
+    font-size: 1.6rem;
+  }
+
+  .contact-info {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .contact-form {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-container {
+    padding: 15px 8px;
+  }
+
+  .contact-container h1 {
+    font-size: 1.4rem;
+  }
+
+  .contact-intro {
+    font-size: 14px;
+  }
+
+  .contact-info {
+    width: 100%;
+    padding: 15px 10px;
+  }
+
+  .social-link {
+    font-size: 22px;
+    padding: 10px;
+  }
+
+  iframe {
+    height: 250px !important;
+    border-radius: 10px !important;
+  }
+}
